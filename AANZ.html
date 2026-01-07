@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AANZ GAMES 🎮</title>
+<style>
+/* --- RESET & BODY --- */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+  background: linear-gradient(-45deg, #0a0f1f, #111827, #0a0f1f, #111827);
+  background-size:400% 400%;
+  animation:bgAnimate 15s ease infinite;
+  color:#fff;
+}
+@keyframes bgAnimate{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* --- HEADER --- */
+header{
+  background:#111827;
+  padding:20px;
+  text-align:center;
+  font-size:30px;
+  font-weight:bold;
+  color:#0ff;
+  text-shadow:0 0 15px #0ff, 0 0 30px #08f;
+  border-bottom:3px solid #0ff;
+  box-shadow:0 0 20px #0ff;
+}
+
+/* --- CONTAINER --- */
+.container{
+  padding:20px;
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  align-items:center;
+}
+.game-launch{
+  background:#1f2937;
+  padding:18px;
+  border-radius:16px;
+  border:2px solid #0ff;
+  box-shadow:0 0 20px #0ff;
+  text-align:center;
+  animation:fadeInScale 0.6s;
+}
+@keyframes fadeInScale{
+  from{opacity:0;transform:scale(0.8);}
+  to{opacity:1;transform:scale(1);}
+}
+
+/* --- THUMBNAIL --- */
+.thumbnail-main{
+  width:100%;
+  height:180px;
+  border-radius:12px;
+  object-fit:cover;
+  border:2px solid #0ff;
+  margin-bottom:15px;
+  box-shadow:0 0 25px #0ff;
+  transition:transform 0.3s, box-shadow 0.3s;
+  animation:thumbGlow 2s infinite alternate;
+}
+.thumbnail-main:hover{
+  transform:scale(1.06);
+  box-shadow:0 0 60px #0ff, 0 0 90px #0ff inset;
+}
+@keyframes thumbGlow{
+  0%{box-shadow:0 0 20px #0ff;}
+  100%{box-shadow:0 0 50px #0ff,0 0 80px #08f inset;}
+}
+
+/* --- BUTTON --- */
+#allGamesBtn, #backBtn{
+  padding:12px 20px;
+  font-size:18px;
+  font-weight:bold;
+  background:#000;
+  color:#0ff;
+  border:2px solid #0ff;
+  border-radius:8px;
+  cursor:pointer;
+  box-shadow:0 0 15px #0ff;
+  text-shadow:0 0 5px #0ff;
+  transition:0.3s;
+  animation:glow 1.5s infinite alternate;
+}
+#allGamesBtn:hover, #backBtn:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 60px #0ff, 0 0 100px #08f inset;
+}
+@keyframes glow{
+  0%{box-shadow:0 0 15px #0ff;}
+  100%{box-shadow:0 0 50px #0ff,0 0 100px #08f inset;}
+}
+
+/* --- LOADING --- */
+#loading{
+  position:fixed;inset:0;
+  background:#000;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  z-index:9999;
+}
+#loading h1{
+  color:#0ff;
+  font-size:36px;
+  text-shadow:0 0 25px #0ff,0 0 50px #08f;
+  margin-bottom:20px;
+  animation:blink 1.5s infinite alternate;
+}
+@keyframes blink{from{opacity:1;}to{opacity:0.6;}}
+#loadingBar{
+  width:75%;height:14px;background:#111;border:2px solid #0ff;border-radius:10px;
+  overflow:hidden;box-shadow:0 0 15px #0ff;
+}
+#progress{width:0%;height:100%;background:#0ff;transition:0.2s;}
+
+/* --- GAME SCREEN --- */
+#gameScreen{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:linear-gradient(180deg,#000 30%,#001a1a 100%);
+  display:none;justify-content:center;align-items:center;flex-direction:column;
+  animation:fadeSlideIn 0.4s forwards;
+}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+#gameFrame{
+  width:95%;height:85%;border:none;border-radius:12px;box-shadow:0 0 25px #0ff;transition:all 0.4s ease-in-out;
+}
+
+/* --- FOOTER & TUTORIAL --- */
+footer{margin-top:30px;text-align:center;color:#0ff;text-shadow:0 0 10px #0ff;font-size:14px;}
+.tutorial{
+  margin-top:15px;
+  background:#111827;
+  padding:12px;
+  border-radius:10px;
+  border:2px solid #0ff;
+  max-width:400px;text-align:left;font-size:14px;line-height:1.5;
+  box-shadow:0 0 15px #0ff;
+  color:#0ff;
+  text-shadow:0 0 10px #0ff;
+  animation:tutorialGlow 2s infinite alternate;
+}
+@keyframes tutorialGlow{
+  0%{text-shadow:0 0 10px #0ff;}
+  100%{text-shadow:0 0 25px #0ff,0 0 50px #08f;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <h1>AANZ GAMES 🎮</h1>
+  <div id="loadingBar"><div id="progress"></div></div>
+</div>
+
+<header>AANZ GAMES 🎮 — Casual Game Hub</header>
+
+<!-- AUDIO -->
+<audio id="bgm" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/24/audio_4c8b7b3d02.mp3" type="audio/mpeg">
+</audio>
+<audio id="clickSfx">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+  <div class="game-launch">
+    <!-- THUMBNAIL LANGSUNG TERPASANG -->
+    <img class="thumbnail-main" src="thumbnail.png" alt="AANZ GAMES">
+    <button id="allGamesBtn" onclick="openGame()">ALL GAMES</button>
+    <div class="tutorial">
+      <strong>Cara main web:</strong><br>
+      1. Klik tombol <strong>ALL GAMES</strong>.<br>
+      2. Tunggu Famobi load di iframe.<br>
+      3. Mainkan semua game casual di dalam Famobi.<br>
+      4. Tekan tombol <strong>⬅ Kembali</strong> untuk balik ke menu utama.<br>
+      5. Pastikan internet menyala agar game berjalan lancar.
+    </div>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="gameScreen">
+  <iframe id="gameFrame"></iframe>
+  <button id="backBtn" onclick="closeGame()">⬅ Kembali</button>
+</div>
+
+<footer>© 2026 AANZ GAMES | Neon Gaming Hub ⚡</footer>
+
+<script>
+/* LOADING BAR */
+let prog=0;
+let load=setInterval(()=>{
+  prog+=5;
+  document.getElementById("progress").style.width=prog+"%";
+  if(prog>=100) clearInterval(load);
+},120);
+
+window.onload = ()=>{
+  setTimeout(()=>{document.getElementById("loading").style.display="none";},1500);
+}
+
+/* OPEN GAME DENGAN TRANSISI */
+function openGame(){
+  document.getElementById("clickSfx").play();
+  document.getElementById("bgm").play();
+  const launch=document.querySelector(".game-launch");
+  launch.style.transition="opacity 0.4s";
+  launch.style.opacity="0";
+  setTimeout(()=>{
+    launch.style.display="none";
+    document.getElementById("gameScreen").style.display="flex";
+    document.getElementById("gameFrame").src = "https://play.famobi.com/";
+  },400);
+}
+
+/* CLOSE GAME DENGAN TRANSISI */
+function closeGame(){
+  document.getElementById("gameScreen").style.display="none";
+  document.getElementById("gameFrame").src="";
+  const launch=document.querySelector(".game-launch");
+  launch.style.display="block";
+  setTimeout(()=>{launch.style.opacity="1";},50);
+}
+</script>
+
+</body>
+</html>
